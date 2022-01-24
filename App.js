@@ -50,7 +50,7 @@ function MainTab() {
   return (
     <Tab.Navigator initialRouteName='Home' screenOptions={{headerShown: false, tabBarShowLabel:false, tabBarVisible: false}}
     >
-      <Tab.Screen name="Home" component={HomePage} options={{tabBarIcon: ()=>{ return <Home_Icon />}}} BottomTabNavigationOptions={} />
+      <Tab.Screen name="Home" component={HomePage} options={{tabBarIcon: ()=>{ return <Home_Icon />}}} />
       <Tab.Screen name="Search" component={SearchPage} options={{tabBarIcon: ()=>{ return <Search_Icon />}}} />
       <Tab.Screen name="Chat" component={ChatPage} options={{tabBarIcon: ()=>{ return <Chat_Icon />}}} />
       <Tab.Screen name="My" component={MyPage} options={{tabBarIcon: ()=>{ return <Mypage_Icon />}}} />
