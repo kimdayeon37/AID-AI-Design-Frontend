@@ -35,7 +35,8 @@ const SignUp_Btn = ({onPress}) => {
 
 const styles = StyleSheet.create({
     container:{
-        flex:1
+        flex:1,
+        backgroundColor:'#ffffff'
     },
     header:{
         flex:1,
@@ -43,7 +44,8 @@ const styles = StyleSheet.create({
     },
     navi:{
         fontSize:20,
-        marginLeft:24
+        marginLeft:24,
+        marginBottom:30
     },
     content:{
         flex:6.77,

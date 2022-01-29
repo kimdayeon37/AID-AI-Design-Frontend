@@ -1,57 +1,38 @@
 import * as React from 'react';
 import { Text, View, StyleSheet,TextInput,TouchableOpacity } from 'react-native';
 import LogoSvg from '../media/logo_svg';
-import axios from 'axios';
+import Id_Icon from '../media/Id_icon';
+import Pw_Icon from '../media/Pw_icon';
+
 
 // import AsyncStorage from '@react-native-community/async-storage';   //async 사용.
 
-function LogIn({ navigation: { navigate } }) {
-    const [Id, setId] = React.useState(null);
-    const [Pw, setPw] = React.useState(null);
+function FindUser({ navigation: { navigate } }) {
     return (
         <View style={styles.container}>
             
             <View style={styles.header}>
-                <Text style={styles.navi}>로그인</Text>
+                <Text style={styles.navi}>아이디/비밀번호 찾기</Text>
             </View>
             <View style={styles.content}>
                 <View style={styles.logo}>
                     <LogoSvg />
+                    <Text style={styles.help}>무엇을 도와드릴까요?</Text>
+                    <View style={styles.line}></View>
                 </View>
                 <View style={styles.login}>
-                    <TextInput style={styles.getId} placeholder="아이디를 입력해주세요" onChangeText={(Id) => setId(Id)} placeholderTextColor={'#999999'}/>
-                    <TextInput style={styles.getPw} placeholder="비밀번호를 입력해주세요" onChangeText={(Pw) => setPw(Pw)} placeholderTextColor={'#999999'} secureTextEntry={true}/>
-                    <Forgot_Btn onPress={() => navigate('Main')} /> 
-                    {/* 임시로 forgot 버튼에 메인페이지 이동 넣어놓음 */}
-                    <LogIn_Btn onPress={() => {IsValid(Id,Pw)}} />
+                    <FindId_Btn />
+                    <FindPw_Btn />
                 </View>
-                <View style={styles.SignUp} >
-                    
-                    <View style={styles.line}></View>
-                    
+                <View style={styles.SignUp}>
+                    <LogIn_Btn onPress={() => navigate('LogIn')} />
                 </View>
             </View>
             <View style={styles.footer}>
-                <SignUp_Btn onPress={() => navigate('FindUser')} />
+                <SignUp_Btn onPress={() => navigate('SignUp')} />
             </View>
         </View>
     );
-}
-
-
-function IsValid(Id, Pw) {
-    axios.post('https://localhost:8000/rest-auth/login/', {
-        username: Id,
-        password: Pw
-    })
-    .then(function (response) {
-        console.log(response);
-    })
-    .catch(function (error) {
-        console.log(error);
-        console.log(Id);
-        console.log(Pw);
-    });
 }
 
 
@@ -59,17 +40,9 @@ const LogIn_Btn = ({onPress}) => {
     return (
         <View style={styles.container}>
             <TouchableOpacity style={styles.button} activeOpacity={0.6} onPress={onPress} >
-                <Text style={styles.buttonText}>로그인</Text>
+                <Text style={styles.buttonText}>로그인 화면으로</Text>
             </TouchableOpacity>
         </View>
-    );
-};
-
-const Forgot_Btn = ({onPress}) => {
-    return (
-        <TouchableOpacity style={styles.Forgot_Btn} activeOpacity={0.6} onPress={onPress}>
-            <Text style={styles.ForgotText}>아이디/비밀번호 찾기</Text>
-        </TouchableOpacity>
     );
 };
 
@@ -78,6 +51,28 @@ const SignUp_Btn = ({onPress}) => {
         <TouchableOpacity style={styles.SignUp_Btn} activeOpacity={0.6} onPress={onPress}>
             <Text style={styles.nothing}>아직 회원이 아닌가요?  </Text><Text style={styles.SignUpText}>회원가입&gt;</Text>
         </TouchableOpacity>
+    );
+};
+
+const FindId_Btn = ({onPress}) => {
+    return (
+        <View style={styles.container}>
+            <TouchableOpacity style={styles.find_button} activeOpacity={0.6} onPress={onPress} >
+                <Id_Icon />
+                <Text style={styles.find_buttonText}>아이디 찾기</Text>
+            </TouchableOpacity>
+        </View>
+    );
+};
+
+const FindPw_Btn = ({onPress}) => {
+    return (
+        <View style={styles.container}>
+            <TouchableOpacity style={styles.find_button} activeOpacity={0.6} onPress={onPress} >
+                <Pw_Icon />
+                <Text style={styles.find_buttonText}>비밀번호 찾기</Text>
+            </TouchableOpacity>
+        </View>
     );
 };
 
@@ -104,11 +99,19 @@ const styles = StyleSheet.create({
     },
     logo: {
         flex: 1,
-        paddingTop:48
+        paddingTop:48,
+        alignItems:'center'
+    },
+    help:{
+        color:'#999999',
+        fontSize:12,
+        marginTop:22
     },
     login:{
         flex: 2.3,
-        justifyContent:"flex-start"
+        justifyContent:"flex-start",
+        alignItems:'center',
+        paddingTop:20
 
     },
     getId:{
@@ -152,7 +155,8 @@ const styles = StyleSheet.create({
         backgroundColor:'#04AA8C',
         borderRadius:18,
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        marginTop:50
     },
     buttonText:{
         color:'#fff',
@@ -171,16 +175,37 @@ const styles = StyleSheet.create({
 
     },
     line:{
-        width:250, 
-        borderColor:'#EAEAEA' ,
-        borderTopWidth:1, 
-        flex:1,
+        width:270, 
+        borderColor:'#CACACA' ,
+        borderTopWidth:1,
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop:45
+        marginTop:12
+    },
+    find_button:{
+        width:315,
+        height:100,
+        backgroundColor:'#ffffff',
+        borderRadius:18,
+        justifyContent:'center',
+        alignItems:'center',
+        shadowColor: "#000",
+        shadowOffset: {
+	        width: 6,
+	        height: 6,
+        },
+        shadowOpacity: 0.1,
+        shadowRadius: 12
+    },
+    find_buttonText:{
+        color:'#999999',
+        fontSize:16,
+        marginTop:12
     },
     SignUp:{
-        flex: 1.8
+        flex: 1.8,
+        justifyContent:'center',
+        alignItems:'center'
     },
     SignUp_Btn:{
         flexDirection:'row',
@@ -203,4 +228,4 @@ const styles = StyleSheet.create({
     
 });
 
-export default LogIn;
+export default FindUser;
